@@ -1,6 +1,8 @@
 import { ValueObject } from "@/shared/domain/value-object/value-object.vo";
 
 export class Email extends ValueObject<string> {
+    private static MAX_LENGTH = 255;
+
     public static create(value: string) {
         const formatted = value.trim().toLocaleLowerCase();
         return new Email(formatted);
@@ -9,7 +11,7 @@ export class Email extends ValueObject<string> {
     protected validate(value: string): void {
         if (!value) throw new Error("Email cannot be empty.");
 
-        if (value.length > 255)
+        if (value.length > Email.MAX_LENGTH)
             throw new Error("Email cannot exceed 255 characters.");
 
         if (!Email.isValidEmail(value)) {
