@@ -49,4 +49,19 @@ export class User extends Entity {
     public get password(): Password {
         return this._password;
     }
+
+    public changeName(name: string): void {
+        this._name = Username.create(name);
+        this.touch();
+    }
+
+    public changeEmail(email: string): void {
+        this._email = Email.create(email);
+        this.touch();
+    }
+
+    public changePassword(password: string): void {
+        this._password = Password.create(password);
+        this.touch();
+    }
 }
