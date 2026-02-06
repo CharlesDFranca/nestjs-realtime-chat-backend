@@ -21,27 +21,20 @@ export class CreateUserUseCase implements IUseCase<
     ) {}
 
     async execute(input: CreateUserInput): Promise<Result<CreateUserOutput>> {
-        try {
-            await this.ensureEmailIsNotUsed(input.email);
+        const alreadyUsed = await this.ensureEmailIsNotUsed(input.email);
+        
+        if (alreadyUsed) return failure(new EmailAlreadyUsedError(input.email));
 
-            const user = User.create(this.idGenerator.generate(), input);
+        const user = User.create(this.idGenerator.generate(), input);
+        await this.userRepository.save(user);
 
-            await this.userRepository.save(user);
-
-            return success({ id: user.id });
-        } catch (e: unknown) {
-            if (e instanceof ApplicationError) {
-                return failure(e);
-            }
-
-            throw e;
-        }
+        return success({ id: user.id });
     }
 
-    private async ensureEmailIsNotUsed(raw: string) {
+    private async ensureEmailIsNotUsed(raw: string): Promise<boolean> {
         const email = Email.create(raw);
         const alreadyUsed = await this.userRepository.findByEmail(email);
 
-        if (alreadyUsed) throw new EmailAlreadyUsedError(email.value);
+        return !!alreadyUsed;
     }
 }
