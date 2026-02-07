@@ -62,7 +62,7 @@ describe("Entity Base", () => {
 
     it("should return true even if other entity has different dates but same id", () => {
         const entity1 = new TestEntity("123", now, later);
-        const entity2 = new TestEntity("123", later, now);
+        const entity2 = new TestEntity("123", later, later);
 
         expect(entity1.equals(entity2)).toBe(true);
     });
