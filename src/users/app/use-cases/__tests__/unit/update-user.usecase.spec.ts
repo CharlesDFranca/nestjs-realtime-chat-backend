@@ -36,13 +36,10 @@ describe("UpdateUserUseCase", () => {
     });
 
     it("should return failure if user is not found", async () => {
-        // arrange
         userRepository.findById.mockResolvedValue(null);
 
-        // act
         const result = await useCase.execute({ id: "invalid-id" });
 
-        // assert
         expect(result.ok).toBe(false);
         expect(result.value).toBeInstanceOf(UserNotFoundError);
 
@@ -50,18 +47,15 @@ describe("UpdateUserUseCase", () => {
     });
 
     it("should update only the name", async () => {
-        // arrange
         const user = makeUser();
 
         userRepository.findById.mockResolvedValue(user as any);
 
-        // act
         const result = await useCase.execute({
             id: "user-id",
             name: "New Name",
         });
 
-        // assert
         expect(user.changeName).toHaveBeenCalledWith("New Name");
         expect(user.changeEmail).not.toHaveBeenCalled();
 
@@ -75,19 +69,16 @@ describe("UpdateUserUseCase", () => {
     });
 
     it("should update email when email is different and not used", async () => {
-        // arrange
         const user = makeUser();
 
         userRepository.findById.mockResolvedValue(user as any);
         userRepository.findByEmail.mockResolvedValue(null);
 
-        // act
         const result = await useCase.execute({
             id: "user-id",
             email: "new@email.com",
         });
 
-        // assert
         expect(userRepository.findByEmail).toHaveBeenCalledWith(
             Email.create("new@email.com"),
         );
@@ -102,19 +93,16 @@ describe("UpdateUserUseCase", () => {
     });
 
     it("should not check duplicated email if email is the same", async () => {
-        // arrange
         const email = Email.create("same@email.com");
         const user = makeUser({ email });
 
         userRepository.findById.mockResolvedValue(user as any);
 
-        // act
         await useCase.execute({
             id: "user-id",
             email: "same@email.com",
         });
 
-        // assert
         expect(userRepository.findByEmail).not.toHaveBeenCalled();
         expect(user.changeEmail).not.toHaveBeenCalled();
 
@@ -122,19 +110,16 @@ describe("UpdateUserUseCase", () => {
     });
 
     it("should return failure if new email is already used", async () => {
-        // arrange
         const user = makeUser();
 
         userRepository.findById.mockResolvedValue(user as any);
         userRepository.findByEmail.mockResolvedValue({} as any);
 
-        // act
         const result = await useCase.execute({
             id: "user-id",
             email: "used@email.com",
         });
 
-        // assert
         expect(result.ok).toBe(false);
         expect(result.value).toBeInstanceOf(EmailAlreadyUsedError);
 
@@ -143,20 +128,17 @@ describe("UpdateUserUseCase", () => {
     });
 
     it("should update name and email together", async () => {
-        // arrange
         const user = makeUser();
 
         userRepository.findById.mockResolvedValue(user as any);
         userRepository.findByEmail.mockResolvedValue(null);
 
-        // act
         const result = await useCase.execute({
             id: "user-id",
             name: "New Name",
             email: "new@email.com",
         });
 
-        // assert
         expect(user.changeName).toHaveBeenCalledWith("New Name");
         expect(user.changeEmail).toHaveBeenCalledWith("new@email.com");
 
