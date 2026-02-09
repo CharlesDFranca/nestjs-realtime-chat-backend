@@ -1,4 +1,4 @@
-import { Role } from "@/chat/domain/value-objects/participant-role.vo";
+import { Role } from "@/conversation/domain/value-objects/participant-role.vo";
 import { Participant } from "../../participant.entity";
 
 describe("Participant Entity", () => {

@@ -1,4 +1,4 @@
-import { InvalidParticipantRoleError } from "@/chat/domain/errors/invalid-participant-role.error";
+import { InvalidParticipantRoleError } from "@/conversation/domain/errors/invalid-participant-role.error";
 import { ParticipantRole, Role } from "../../participant-role.vo";
 
 describe("ParticipantRole VO", () => {
