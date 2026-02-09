@@ -4,9 +4,10 @@ import { AppService } from "./app.service";
 import { EnvConfigModule } from "./shared/infra/env-config/env-config.module";
 import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
+import { ConversationModule } from './conversation/conversation.module';
 
 @Module({
-    imports: [EnvConfigModule.forRoot(), UsersModule, ChatModule],
+    imports: [EnvConfigModule.forRoot(), UsersModule, ChatModule, ConversationModule],
     controllers: [AppController],
     providers: [AppService],
 })
