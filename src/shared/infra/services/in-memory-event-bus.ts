@@ -13,7 +13,7 @@ export class InMemoryEventBus implements IEventBus {
         this.handlers.set(eventName, [...existing, handler]);
     }
 
-    publish(events: IDomainEvent[]): void {
+    async publish(events: IDomainEvent[]): Promise<void> {
         for (const event of events) {
             const eventName = event.name();
             const handlers = this.handlers.get(eventName) ?? [];
