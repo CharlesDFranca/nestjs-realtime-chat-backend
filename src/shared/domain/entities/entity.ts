@@ -17,7 +17,7 @@ export abstract class Entity {
         this._domainEvents.push(event);
     }
 
-    protected pullDomainEvents(): IDomainEvent[] {
+    public pullDomainEvents(): IDomainEvent[] {
         const events: IDomainEvent[] = [...this._domainEvents];
         this._domainEvents.length = 0;
         return events;

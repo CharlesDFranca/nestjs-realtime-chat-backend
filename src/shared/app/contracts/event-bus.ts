@@ -7,5 +7,5 @@ export interface IEventBus {
         eventName: string,
         handler: EventHandler<T>,
     ): void;
-    publish(events: IDomainEvent[]): void;
+    publish(events: IDomainEvent[]): Promise<void>;
 }
