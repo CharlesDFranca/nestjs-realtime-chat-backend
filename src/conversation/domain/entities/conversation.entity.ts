@@ -17,7 +17,7 @@ export abstract class Conversation extends Entity {
         messageId: string,
         senderId: string,
         content: string,
-    ): void {
+    ): Message {
         this.assertParticipant(senderId);
 
         const message = Message.create(messageId, {
@@ -39,6 +39,8 @@ export abstract class Conversation extends Entity {
         this.addDomainEvent(event);
 
         this.touch();
+
+        return message;
     }
 
     public get lastMessageId(): string | undefined {
