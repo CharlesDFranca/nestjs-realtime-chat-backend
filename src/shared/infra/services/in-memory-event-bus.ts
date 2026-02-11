@@ -4,10 +4,7 @@ import { IDomainEvent } from "@/shared/domain/contracts/domain-event";
 export class InMemoryEventBus implements IEventBus {
     private handlers = new Map<string, EventHandler<any>[]>();
 
-    subscribe<T extends IDomainEvent>(
-        eventName: string,
-        handler: EventHandler<T>,
-    ): void {
+    subscribe(eventName: string, handler: EventHandler<any>): void {
         const existing = this.handlers.get(eventName) ?? [];
 
         this.handlers.set(eventName, [...existing, handler]);
@@ -19,7 +16,7 @@ export class InMemoryEventBus implements IEventBus {
             const handlers = this.handlers.get(eventName) ?? [];
 
             for (const handler of handlers) {
-                handler(event);
+                handler.handle(event);
             }
         }
     }
