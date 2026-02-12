@@ -17,6 +17,7 @@
         "paths": {
             "@/*": ["./src/*"]
         },
+        "types": ["node", "jest", "jest-extended"],
         "incremental": true,
         "skipLibCheck": true,
         "strictNullChecks": true,
