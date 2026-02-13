@@ -5,6 +5,7 @@ module.exports = {
   preset: "ts-jest",
   rootDir: "./",
   moduleFileExtensions: ["js", "json", "ts"],
+  setupFilesAfterEnv: ['jest-extended/all'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: "<rootDir>/",
   }),

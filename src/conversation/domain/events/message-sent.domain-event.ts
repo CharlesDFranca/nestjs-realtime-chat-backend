@@ -2,7 +2,7 @@ import { IDomainEvent } from "@/shared/domain/contracts/domain-event";
 
 export class MessageSentDomainEvent implements IDomainEvent {
     public readonly occurredAt: Date;
-    private static readonly eventName = "message.sent";
+    public static readonly EVENT_NAME = "message.sent";
 
     constructor(
         public readonly conversationId: string,
@@ -12,7 +12,7 @@ export class MessageSentDomainEvent implements IDomainEvent {
         this.occurredAt = new Date();
     }
 
-    public name(): string {
-        return MessageSentDomainEvent.eventName;
+    public eventName(): string {
+        return MessageSentDomainEvent.EVENT_NAME;
     }
 }

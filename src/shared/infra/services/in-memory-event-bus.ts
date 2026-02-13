@@ -12,7 +12,7 @@ export class InMemoryEventBus implements IEventBus {
 
     async publish(events: IDomainEvent[]): Promise<void> {
         for (const event of events) {
-            const eventName = event.name();
+            const eventName = event.eventName();
             const handlers = this.handlers.get(eventName) ?? [];
 
             for (const handler of handlers) {
