@@ -12,7 +12,7 @@ export class MessageSentDomainEvent implements IDomainEvent {
         this.occurredAt = new Date();
     }
 
-    public name(): string {
+    public eventName(): string {
         return MessageSentDomainEvent.eventName;
     }
 }
