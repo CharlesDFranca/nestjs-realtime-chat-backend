@@ -1,6 +1,7 @@
 import { IDomainEvent } from "@/shared/domain/contracts/domain-event";
 
 export interface EventHandler<E extends IDomainEvent> {
+    eventName(): string;
     handle(event: E): Promise<void>;
 }
 
