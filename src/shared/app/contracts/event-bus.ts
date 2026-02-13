@@ -1,11 +1,13 @@
 import { IDomainEvent } from "@/shared/domain/contracts/domain-event";
 
-export type EventHandler<T extends IDomainEvent> = (event: T) => void;
+export interface EventHandler<E extends IDomainEvent> {
+    handle(event: E): Promise<void>;
+}
 
 export interface IEventBus {
-    subscribe<T extends IDomainEvent>(
+    subscribe<E extends IDomainEvent>(
         eventName: string,
-        handler: EventHandler<T>,
+        handler: EventHandler<E>,
     ): void;
-    publish(events: IDomainEvent[]): void;
+    publish(events: IDomainEvent[]): Promise<void>;
 }
